@@ -1,3 +1,7 @@
+<?php
+$images = glob("Images/*.{jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP}", GLOB_BRACE);
+shuffle($images);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,18 +19,15 @@
   --text:#f7f7f7;
   --muted:#9a9a9a;
 }
-
-* { box-sizing:border-box; }
-
-html,body {
+*{box-sizing:border-box}
+html,body{
   margin:0;
   background:radial-gradient(circle at top,#151820,#050608);
   color:var(--text);
   font-family:system-ui,-apple-system,Inter,sans-serif;
   height:100%;
 }
-
-.app {
+.app{
   max-width:1100px;
   margin:auto;
   padding:16px;
@@ -34,21 +35,18 @@ html,body {
   flex-direction:column;
   gap:14px;
 }
-
-header h1 {
+header h1{
   margin:0;
   font-size:1.4rem;
   letter-spacing:.08em;
   text-transform:uppercase;
 }
-
-header p {
+header p{
   margin:4px 0 0;
   color:var(--muted);
   font-size:.85rem;
 }
-
-.card {
+.card{
   flex:1;
   background:linear-gradient(145deg,#080a0f,#10131b);
   border-radius:20px;
@@ -58,8 +56,7 @@ header p {
   flex-direction:column;
   gap:12px;
 }
-
-.card-body {
+.card-body{
   flex:1;
   display:flex;
   align-items:center;
@@ -68,20 +65,17 @@ header p {
   border-radius:14px;
   overflow:hidden;
 }
-
-.card-body img {
+.card-body img{
   max-width:100%;
   max-height:70vh;
   object-fit:contain;
 }
-
-.controls {
+.controls{
   display:flex;
   justify-content:center;
   gap:16px;
 }
-
-button {
+button{
   border:none;
   border-radius:999px;
   padding:10px 22px;
@@ -93,26 +87,22 @@ button {
   color:var(--text);
   border:1px solid rgba(255,255,255,.08);
 }
-
-.like { border-color:var(--like); }
-.nope { border-color:var(--nope); }
-.super { border-color:var(--accent); }
-
-.progress {
+.like{border-color:var(--like)}
+.nope{border-color:var(--nope)}
+.super{border-color:var(--accent)}
+.progress{
   height:6px;
   background:rgba(255,255,255,.08);
   border-radius:999px;
   overflow:hidden;
 }
-
-.bar {
+.bar{
   height:100%;
   width:0%;
   background:linear-gradient(90deg,var(--accent),#fff);
   transition:width .2s;
 }
-
-#results {
+#results{
   display:none;
   margin-top:16px;
   padding:16px;
@@ -120,8 +110,7 @@ button {
   border-radius:18px;
   border:1px solid rgba(255,255,255,.06);
 }
-
-.collage {
+.collage{
   display:grid;
   grid-template-columns:2fr 1fr;
   grid-template-rows:1fr 1fr 1fr;
@@ -129,15 +118,13 @@ button {
   border-radius:14px;
   overflow:hidden;
 }
-
-.collage img {
+.collage img{
   width:100%;
   height:100%;
   object-fit:cover;
 }
-
-.collage div:nth-child(1){grid-row:1/3;}
-.collage div:nth-child(4){grid-column:1;}
+.collage div:nth-child(1){grid-row:1/3}
+.collage div:nth-child(4){grid-column:1}
 </style>
 </head>
 
@@ -146,13 +133,11 @@ button {
 
 <header>
   <h1>Visual Taste Swipe</h1>
-  <p>Swipe what feels right. No thinking. Pure instinct.</p>
+  <p>Swipe on instinct. Discover the director’s visual language.</p>
 </header>
 
 <div class="card">
-  <div class="card-body" id="cardBody">
-    <span style="color:var(--muted)">Loading…</span>
-  </div>
+  <div class="card-body" id="cardBody"></div>
 
   <div class="controls">
     <button class="nope" onclick="dislike()">No</button>
@@ -168,8 +153,7 @@ button {
 <section id="results">
   <h2>Visual Direction</h2>
   <p style="color:var(--muted);font-size:.85rem">
-    These images represent the visual language that resonated most.
-    Use this as creative direction for lighting, camera and tone.
+    These images define the visual taste that resonated most.
   </p>
   <div id="collage"></div>
 </section>
@@ -178,8 +162,9 @@ button {
 
 <script>
 const TOTAL_SWIPES = 40;
-let allImages = [];
-let deck = [];
+const allImages = <?php echo json_encode($images); ?>;
+
+let deck = allImages.slice(0, TOTAL_SWIPES);
 let index = 0;
 let likes = [];
 let superlikes = [];
@@ -189,16 +174,8 @@ const bar = document.getElementById("bar");
 const results = document.getElementById("results");
 const collageEl = document.getElementById("collage");
 
-function shuffle(a){
-  for(let i=a.length-1;i>0;i--){
-    const j=Math.floor(Math.random()*(i+1));
-    [a[i],a[j]]=[a[j],a[i]];
-  }
-  return a;
-}
-
 function render(){
-  if(index>=deck.length){ return end(); }
+  if(index >= deck.length) return end();
   cardBody.innerHTML="";
   const img=document.createElement("img");
   img.src=deck[index];
@@ -231,14 +208,8 @@ function end(){
   collageEl.appendChild(grid);
 }
 
-fetch("images.json")
-  .then(r=>r.json())
-  .then(list=>{
-    allImages=list;
-    deck=shuffle([...allImages]).slice(0,TOTAL_SWIPES);
-    render();
-  });
+render();
 </script>
 
 </body>
-</html>
+</html
