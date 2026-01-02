@@ -1,160 +1,45 @@
-<?php
-$images = glob("Images 2/*.{jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP}", GLOB_BRACE);
-shuffle($images);
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <title>Visual Taste Swipe</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <style>
     :root {
-      --bg: #050608;
-      --panel: #0e1118;
-      --accent: #f5c643;
-      --like: #5ad27c;
-      --nope: #ff4a4a;
-      --text: #f7f7f7;
-      --muted: #9a9a9a;
+      --bg:#050608; --panel:#0e1118; --accent:#f5c643;
+      --like:#5ad27c; --nope:#ff4a4a; --text:#f7f7f7; --muted:#9a9a9a;
     }
-
-    * { box-sizing: border-box; }
-
-    html, body {
-      margin: 0;
-      height: 100%;
-      background: radial-gradient(circle at top, #151820, #050608);
-      color: var(--text);
-      font-family: system-ui, -apple-system, Inter, sans-serif;
-    }
-
-    .app {
-      max-width: 1100px;
-      margin: auto;
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 1.4rem;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-    }
-
-    header p {
-      margin: 4px 0 0;
-      font-size: .85rem;
-      color: var(--muted);
-    }
-
-    .card {
-      flex: 1;
-      background: linear-gradient(145deg, #080a0f, #10131b);
-      border-radius: 20px;
-      border: 1px solid rgba(255,255,255,.05);
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .card-body {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #050608;
-      border-radius: 14px;
-      overflow: hidden;
-    }
-
-    .card-body img {
-      max-width: 100%;
-      max-height: 70vh;
-      object-fit: contain;
-    }
-
-    .controls {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-    }
-
-    button {
-      border: none;
-      border-radius: 999px;
-      padding: 10px 22px;
-      font-size: .9rem;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      cursor: pointer;
-      background: #181b23;
-      color: var(--text);
-      border: 1px solid rgba(255,255,255,.08);
-    }
-
-    .like  { border-color: var(--like); }
-    .nope  { border-color: var(--nope); }
-    .super { border-color: var(--accent); }
-
-    .progress {
-      height: 6px;
-      background: rgba(255,255,255,.08);
-      border-radius: 999px;
-      overflow: hidden;
-    }
-
-    .bar {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, var(--accent), #fff);
-      transition: width .2s;
-    }
-
-    #results {
-      display: none;
-      margin-top: 16px;
-      padding: 16px;
-      background: radial-gradient(circle at top, #171924, #050608);
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.06);
-    }
-
-    .collage {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      grid-template-rows: 1fr 1fr 1fr;
-      gap: 6px;
-      border-radius: 14px;
-      overflow: hidden;
-    }
-
-    .collage img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .collage div:nth-child(1) { grid-row: 1 / 3; }
-    .collage div:nth-child(4) { grid-column: 1; }
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%;background:radial-gradient(circle at top,#151820,#050608);color:var(--text);font-family:system-ui,-apple-system,Inter,sans-serif;}
+    .app{max-width:1100px;margin:auto;padding:16px;display:flex;flex-direction:column;gap:14px;}
+    header h1{margin:0;font-size:1.4rem;letter-spacing:.08em;text-transform:uppercase}
+    header p{margin:4px 0 0;font-size:.85rem;color:var(--muted)}
+    .card{flex:1;background:linear-gradient(145deg,#080a0f,#10131b);border-radius:20px;border:1px solid rgba(255,255,255,.05);padding:16px;display:flex;flex-direction:column;gap:12px;}
+    .card-body{flex:1;display:flex;align-items:center;justify-content:center;background:#050608;border-radius:14px;overflow:hidden;}
+    .card-body img{max-width:100%;max-height:70vh;object-fit:contain}
+    .controls{display:flex;justify-content:center;gap:16px;flex-wrap:wrap}
+    button{border:none;border-radius:999px;padding:10px 22px;font-size:.9rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;background:#181b23;color:var(--text);border:1px solid rgba(255,255,255,.08)}
+    .like{border-color:var(--like)} .nope{border-color:var(--nope)} .super{border-color:var(--accent)}
+    .progress{height:6px;background:rgba(255,255,255,.08);border-radius:999px;overflow:hidden}
+    .bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),#fff);transition:width .2s}
+    #results{display:none;margin-top:16px;padding:16px;background:radial-gradient(circle at top,#171924,#050608);border-radius:18px;border:1px solid rgba(255,255,255,.06)}
+    .collage{display:grid;grid-template-columns:2fr 1fr;grid-template-rows:1fr 1fr 1fr;gap:6px;border-radius:14px;overflow:hidden}
+    .collage img{width:100%;height:100%;object-fit:cover}
+    .collage div:nth-child(1){grid-row:1/3} .collage div:nth-child(4){grid-column:1}
+    .status{color:var(--muted);font-size:.9rem}
   </style>
 </head>
-
 <body>
 <div class="app">
-
   <header>
     <h1>Visual Taste Swipe</h1>
     <p>Swipe on instinct. Discover the director’s visual language.</p>
   </header>
 
   <div class="card">
-    <div class="card-body" id="cardBody"></div>
+    <div class="card-body" id="cardBody">
+      <div class="status" id="status">Loading images…</div>
+    </div>
 
     <div class="controls">
       <button class="nope"  onclick="dislike()">No</button>
@@ -162,9 +47,7 @@ shuffle($images);
       <button class="like"  onclick="like()">Yes</button>
     </div>
 
-    <div class="progress">
-      <div class="bar" id="bar"></div>
-    </div>
+    <div class="progress"><div class="bar" id="bar"></div></div>
   </div>
 
   <section id="results">
@@ -174,43 +57,94 @@ shuffle($images);
     </p>
     <div id="collage"></div>
   </section>
-
 </div>
 
 <script>
+/** === CONFIG (pas dit aan) === **/
+const OWNER  = "tvlmedia";      // <- jouw GitHub username/org
+const REPO   = "roantinder";    // <- repo naam
+const BRANCH = "main";          // main/master
+const FOLDER = "Images 2";      // exact mapnaam (spatie is ok)
 const TOTAL_SWIPES = 40;
-const allImages = <?php echo json_encode($images); ?>;
 
-let deck = allImages.slice(0, TOTAL_SWIPES);
+/** === STATE === **/
+let allImages = [];
+let deck = [];
 let index = 0;
 let likes = [];
 let superlikes = [];
 
+/** === DOM === **/
 const cardBody  = document.getElementById("cardBody");
+const statusEl  = document.getElementById("status");
 const bar       = document.getElementById("bar");
 const results   = document.getElementById("results");
 const collageEl = document.getElementById("collage");
 
-function render() {
-  if (index >= deck.length) return end();
+function shuffle(a){
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+function isImageFile(name){
+  return /\.(jpg|jpeg|png|webp)$/i.test(name);
+}
+
+/**
+ * Haalt bestandslijst uit GitHub repo map via API.
+ * Geen images.json nodig.
+ */
+async function loadImagesFromGitHub() {
+  const path = encodeURIComponent(FOLDER).replaceAll("%2F","/"); // folder name encode (spatie->%20)
+  const url = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${path}?ref=${BRANCH}`;
+
+  const res = await fetch(url, { headers: { "Accept": "application/vnd.github+json" }});
+  if(!res.ok){
+    throw new Error(`GitHub API error ${res.status}. Check OWNER/REPO/BRANCH/FOLDER + public repo.`);
+  }
+
+  const items = await res.json();
+  const files = items
+    .filter(x => x.type === "file" && isImageFile(x.name))
+    // gebruik download_url (werkt altijd)
+    .map(x => x.download_url);
+
+  return files;
+}
+
+function render(){
+  if(index >= deck.length) return end();
+
   cardBody.innerHTML = "";
   const img = document.createElement("img");
   img.src = deck[index];
+  img.alt = "Still";
+  img.onload = () => {}; // ok
+  img.onerror = () => {
+    // als een afbeelding faalt, skip hem
+    next();
+  };
   cardBody.appendChild(img);
+
   bar.style.width = ((index / deck.length) * 100) + "%";
 }
 
-function next()      { index++; render(); }
-function like()      { likes.push(deck[index]); next(); }
-function superlike() { superlikes.push(deck[index]); next(); }
-function dislike()   { next(); }
+function next(){ index++; render(); }
+function like(){ if(deck[index]) likes.push(deck[index]); next(); }
+function superlike(){ if(deck[index]) superlikes.push(deck[index]); next(); }
+function dislike(){ next(); }
 
-function end() {
+function end(){
   bar.style.width = "100%";
   cardBody.innerHTML = "<strong>Done</strong>";
   results.style.display = "block";
 
+  collageEl.innerHTML = "";
   const chosen = [...superlikes, ...likes].slice(0, 5);
+
   const grid = document.createElement("div");
   grid.className = "collage";
 
@@ -225,8 +159,22 @@ function end() {
   collageEl.appendChild(grid);
 }
 
-render();
-</script>
+(async function start(){
+  try{
+    allImages = await loadImagesFromGitHub();
 
+    if(!allImages.length){
+      statusEl.textContent = `No images found in "${FOLDER}". Check file extensions and folder name.`;
+      return;
+    }
+
+    deck = shuffle([...allImages]).slice(0, Math.min(TOTAL_SWIPES, allImages.length));
+    statusEl.remove();
+    render();
+  } catch(e){
+    statusEl.textContent = e.message;
+  }
+})();
+</script>
 </body>
 </html>
